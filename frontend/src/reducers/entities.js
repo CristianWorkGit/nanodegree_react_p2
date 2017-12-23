@@ -22,9 +22,7 @@ const ACTION_HANDLERS = {
 
 /* Initial state default */
 export const initialState = {
-  posts: {},
-  comments: {},
-  categories: {},
+  categories: {}
 };
 
 export default function entitiesReducer(state = initialState, action) {

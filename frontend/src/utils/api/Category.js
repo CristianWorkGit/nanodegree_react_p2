@@ -1,6 +1,6 @@
 import { API_BASE, xhr } from '../../utils';
 
-export const Category = {
+export const CategoryAPI = {
   getCategories() {
     return xhr(`${API_BASE}/categories`, {
       method: 'GET',
@@ -14,4 +14,4 @@ export const Category = {
   },
 };
 
-export default Category;
+export default CategoryAPI;

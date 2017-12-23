@@ -1,5 +1,7 @@
-export { Category } from './Category';
+import CategoryAPI from './category'
+
+export { CategoryAPI } from './category'
 
 export default {
-  Category,
-};
+  CategoryAPI
+}

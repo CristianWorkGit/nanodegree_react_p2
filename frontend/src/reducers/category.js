@@ -1,20 +1,20 @@
-import { Category } from '../utils/api';
+import { CategoryAPI } from '../utils/api';
 import { normalize } from 'normalizr';
 
 import * as schemas from '../schemas';
 import * as entities from './entities';
 
-import { GET_CATEGORIES, GET_CATEGORIES_FAILURE, GET_CATEGORIES_SUCCESS } from '../actions';
+import { GET_CATEGORIES, GET_CATEGORIES_ERROR, GET_CATEGORIES_SUCCESS } from '../actions';
 
 /* Actions default */
 export const getCategories = () => async dispatch => {
   dispatch({ type: GET_CATEGORIES });
 
   try {
-    const response = await Category.getCategories();
+    const response = await CategoryAPI.getCategories();
     return getCategoriesSuccess({ response, dispatch });
   } catch (error) {
-    dispatch({ type: GET_CATEGORIES_FAILURE, error });
+    dispatch({ type: GET_CATEGORIES_ERROR, error });
   }
 };
 
@@ -36,7 +36,7 @@ const ACTION_HANDLERS = {
     error: null,
     isLoading: true
   }),
-  [GET_CATEGORIES_FAILURE]: (state, { error }) => ({
+  [GET_CATEGORIES_ERROR]: (state, { error }) => ({
     error,
     isLoading: false
   }),
