@@ -20,10 +20,6 @@ const mapActionCreators = {
 };
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { getCategories } = this.props;
 
@@ -37,7 +33,7 @@ class Header extends Component {
   };
 
   render() {
-    const { selectedFilter, categories, onChangeFilter } = this.props;
+    const { selectedFilter, categories } = this.props;
 
     return (
       <div className="header">

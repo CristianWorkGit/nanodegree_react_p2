@@ -1,10 +1,13 @@
-import * as schemas from '../schemas';
-
-import { MERGE_CATEGORIES } from '../actions';
+import { MERGE_CATEGORIES, MERGE_POSTS } from '../actions';
 
 export const mergeCategories = (categories = {}) => ({
   type: MERGE_CATEGORIES,
   categories,
+});
+
+export const mergePosts = (posts = {}) => ({
+  type: MERGE_POSTS,
+  posts,
 });
 
 /* Action Handler */
@@ -18,11 +21,21 @@ const ACTION_HANDLERS = {
       },
     };
   },
+  [MERGE_POSTS]: (state, { posts }) => {
+    return {
+      ...state,
+      posts: {
+        ...state.posts,
+        ...posts,
+      },
+    };
+  },
 };
 
 /* Initial state default */
 export const initialState = {
-  categories: {}
+  categories: {},
+  posts: {},
 };
 
 export default function entitiesReducer(state = initialState, action) {
