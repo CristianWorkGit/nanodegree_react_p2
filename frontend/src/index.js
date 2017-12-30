@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import './static/pure.css';
+import './index.css';
 
 import App from './components/App';
 import rootReducer from './reducers';

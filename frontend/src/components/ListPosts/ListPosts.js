@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { getPosts } from '../../reducers/posts';
 import FILTERS from '../../utils/constants/FILTERS';
@@ -14,7 +15,6 @@ const statePosts = (state, props) => {
     fieldToFilter => fieldToFilter.value === props.selectedFilter
   )[0];
 
-  console.log(sortByProp);
   return Object.values(state.entities.posts)
     .filter(post => {
       if (post.deleted) {
@@ -57,8 +57,34 @@ class ListPosts extends Component {
         {posts &&
           posts.length > 0 &&
           posts.map(post => (
-            <div key={post.id} className="post-element">
-              <h1>{post.title}</h1>
+            <div key={post.id} className="post">
+              <div className="post-options">
+                <div className="post-edit">
+                  <Link to={`/posts/${post.id}/edit`} className="button-secondary pure-button">
+                    EDIT
+                  </Link>
+                </div>
+                <div className="post-delete">
+                  <Link to={`/posts/${post.id}/edit`} className="button-error pure-button">
+                    DELETE
+                  </Link>
+                </div>
+              </div>
+              <div className="post-header">
+                <h1 className="post-title">{post.title}</h1>
+              </div>
+              <div className="post-body">
+                <span className="post-content">{post.body}</span>
+              </div>
+              <div className="post-info">
+                <span className="post-author">
+                  <strong>Author:</strong> {post.author}
+                </span>
+                <span className="post-comments">
+                  <strong>{post.commentCount}</strong>
+                  {post.commentCount > 1 ? ' comments' : ' comment'}
+                </span>
+              </div>
             </div>
           ))}
       </div>
