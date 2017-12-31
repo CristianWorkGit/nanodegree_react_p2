@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getPost } from '../../reducers/posts';
+import { getPost, editPost } from '../../reducers/posts';
 import AddEditPost from '../AddEditPost/AddEditPost';
 
 const stateCategories = state => Object.values(state.entities.categories);
@@ -21,6 +21,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapActionCreators = {
   getPost,
+  editPost,
 };
 
 class EditPost extends Component {
@@ -29,10 +30,17 @@ class EditPost extends Component {
     getPost(postId);
   }
 
+  handleOnSubmitForm = data => {
+    const { editPost } = this.props;
+    const { post, ...otherProps } = data;
+
+    editPost(post.id, otherProps);
+  };
+
   render() {
     const { post, categories } = this.props;
 
-    return <AddEditPost post={post} categories={categories} />;
+    return <AddEditPost post={post} categories={categories} onSubmit={this.handleOnSubmitForm} />;
   }
 }
 

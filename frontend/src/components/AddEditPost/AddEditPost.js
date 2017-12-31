@@ -38,6 +38,28 @@ class AddEditPost extends Component {
     }
   }
 
+  handleSubmit = event => {
+    const { onSubmit, post } = this.props;
+    event.preventDefault();
+
+    const { title, body, author, category } = this.state;
+    const data = {};
+
+    if (!post) {
+      data.author = author.value;
+      data.category = category.value;
+    } else {
+      data.post = {
+        id: post.id,
+      };
+    }
+
+    data.body = body.value;
+    data.title = title.value;
+
+    onSubmit(data);
+  };
+
   handleChange = event => {
     const { id, value } = event.target;
     this.setState({ [id]: { value } });
@@ -49,7 +71,7 @@ class AddEditPost extends Component {
 
     return (
       <div className="postEdit">
-        <form className="pure-form pure-form-stacked">
+        <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit}>
           <fieldset>
             <div className="post-options">
               <div className="post-save">

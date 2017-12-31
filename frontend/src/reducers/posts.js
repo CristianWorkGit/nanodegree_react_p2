@@ -63,6 +63,28 @@ export const getPostSuccess = ({ response, dispatch }) => {
   return normalized.result;
 };
 
+export const editPost = (postId, changes) => async dispatch => {
+  dispatch({ type: EDIT_POST });
+
+  try {
+    const response = await PostsAPI.updatePost(postId, changes);
+    return editPostSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: EDIT_POST_ERROR, error });
+  }
+};
+
+export const editPostSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.posts);
+  const { posts } = normalized.entities;
+
+  dispatch(entities.mergePosts(posts));
+
+  dispatch({ type: EDIT_POST_SUCCESS });
+
+  return normalized.result;
+};
+
 const ACTION_HANDLERS = {
   [GET_POSTS]: state => ({
     error: null,
@@ -85,6 +107,18 @@ const ACTION_HANDLERS = {
     isLoading: false,
   }),
   [GET_POST_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
+  [EDIT_POST]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [EDIT_POST_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [EDIT_POST_SUCCESS]: state => ({
     error: null,
     isLoading: false,
   }),

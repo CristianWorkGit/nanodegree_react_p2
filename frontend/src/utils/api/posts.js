@@ -12,6 +12,19 @@ export const PostsAPI = {
       method: 'GET',
     });
   },
+
+  updatePost(postId, changes) {
+    return xhr(`${API_BASE}/posts/${postId}`, {
+      method: 'PUT',
+      body: JSON.stringify(changes),
+    });
+  },
+
+  deletePost(postId) {
+    return xhr(`${API_BASE}/posts/${postId}`, {
+      method: 'DELETE',
+    });
+  },
 };
 
 export default PostsAPI;
