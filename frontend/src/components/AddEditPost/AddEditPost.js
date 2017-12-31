@@ -1,9 +1,4 @@
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import { getPosts } from '../../reducers/posts';
-import FILTERS from '../../utils/constants/FILTERS';
 
 class AddEditPost extends Component {
   constructor(props) {

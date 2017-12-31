@@ -23,7 +23,10 @@ export const getPosts = () => async dispatch => {
   dispatch({ type: GET_POSTS });
 
   try {
+    console.log('CHEGOU1');
     const response = await PostsAPI.listAllPosts();
+    console.log('CHEGOU2');
+    console.log(response);
     return getPostsSuccess({ response, dispatch });
   } catch (error) {
     dispatch({ type: GET_POSTS_ERROR, error });
@@ -85,6 +88,28 @@ export const editPostSuccess = ({ response, dispatch }) => {
   return normalized.result;
 };
 
+export const deletePost = postId => async dispatch => {
+  dispatch({ type: DELETE_POST });
+
+  try {
+    const response = await PostsAPI.deletePost(postId);
+    return deletePostSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: DELETE_POST_ERROR, error });
+  }
+};
+
+export const deletePostSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.posts);
+  const { posts } = normalized.entities;
+
+  dispatch(entities.demergePost(posts));
+
+  dispatch({ type: DELETE_POST_SUCCESS });
+
+  return normalized.result;
+};
+
 const ACTION_HANDLERS = {
   [GET_POSTS]: state => ({
     error: null,
@@ -119,6 +144,18 @@ const ACTION_HANDLERS = {
     isLoading: false,
   }),
   [EDIT_POST_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
+  [DELETE_POST]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [DELETE_POST_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [DELETE_POST_SUCCESS]: state => ({
     error: null,
     isLoading: false,
   }),

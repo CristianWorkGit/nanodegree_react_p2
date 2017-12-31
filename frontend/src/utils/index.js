@@ -1,9 +1,9 @@
 const JSONHeaders = {
   Accept: 'application/json',
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
 };
 
-export const API_BASE = 'http://localhost:3001'
+export const API_BASE = 'http://localhost:3001';
 
 export const serializeParams = params => {
   const searchParams = new URLSearchParams();

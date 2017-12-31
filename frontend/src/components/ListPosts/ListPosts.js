@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getPosts } from '../../reducers/posts';
+import { getPosts, deletePost } from '../../reducers/posts';
 import FILTERS from '../../utils/constants/FILTERS';
 
 import sortBy from 'sort-by';
@@ -38,17 +38,22 @@ const mapStateToProps = (state, props) => ({
 
 const mapActionCreators = {
   getPosts,
+  deletePost,
 };
 
 class ListPosts extends Component {
   componentDidMount() {
     const { getPosts } = this.props;
-
     getPosts();
   }
 
+  onClickDelete = postId => {
+    const { deletePost } = this.props;
+    deletePost(postId);
+  };
+
   render() {
-    const { selectedFilter, categories, posts, category } = this.props;
+    const { posts } = this.props;
 
     return (
       <div className="posts">
@@ -64,9 +69,12 @@ class ListPosts extends Component {
                   </Link>
                 </div>
                 <div className="post-delete">
-                  <Link to={`/posts/${post.id}/edit`} className="button-error pure-button">
-                    DELETE
-                  </Link>
+                  <input
+                    type="button"
+                    onClick={this.onClickDelete(post.id)}
+                    value="DELETE"
+                    className="button-error pure-button"
+                  />
                 </div>
               </div>
               <div className="post-header">

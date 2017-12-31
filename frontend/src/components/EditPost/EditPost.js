@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { getPost, editPost } from '../../reducers/posts';
 import AddEditPost from '../AddEditPost/AddEditPost';
