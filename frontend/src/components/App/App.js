@@ -38,7 +38,9 @@ class App extends Component {
 
           <Route
             path="/posts/:postId/edit"
-            render={({ history, match }) => <EditPost postId={match.params.postId} />}
+            render={({ history, match }) => (
+              <EditPost history={history} postId={match.params.postId} />
+            )}
           />
         </section>
       </div>

@@ -16,6 +16,7 @@ const statePost = (state, props) => {
 const mapStateToProps = (state, props) => ({
   post: statePost(state, props),
   categories: stateCategories(state),
+  history: props.history,
   postId: props.postId,
 });
 
@@ -31,10 +32,10 @@ class EditPost extends Component {
   }
 
   handleOnSubmitForm = data => {
-    const { editPost } = this.props;
+    const { editPost, history } = this.props;
     const { post, ...otherProps } = data;
 
-    editPost(post.id, otherProps);
+    editPost(post.id, otherProps).then(() => history.replace('/'));
   };
 
   render() {
