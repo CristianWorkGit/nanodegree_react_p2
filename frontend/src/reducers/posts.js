@@ -4,9 +4,21 @@ import { normalize } from 'normalizr';
 import * as schemas from '../schemas';
 import * as entities from './entities';
 
-import { GET_POSTS, GET_POSTS_ERROR, GET_POSTS_SUCCESS } from '../actions';
+import {
+  GET_POSTS,
+  GET_POSTS_ERROR,
+  GET_POSTS_SUCCESS,
+  GET_POST,
+  GET_POST_SUCCESS,
+  GET_POST_ERROR,
+  EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_ERROR,
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_ERROR,
+} from '../actions';
 
-/* Actions default */
 export const getPosts = () => async dispatch => {
   dispatch({ type: GET_POSTS });
 
@@ -18,7 +30,6 @@ export const getPosts = () => async dispatch => {
   }
 };
 
-/* Actions getCategoriesSuccess */
 export const getPostsSuccess = ({ response, dispatch }) => {
   const normalized = normalize(response, [schemas.posts]);
   const { posts } = normalized.entities;
@@ -30,7 +41,28 @@ export const getPostsSuccess = ({ response, dispatch }) => {
   return normalized.result;
 };
 
-/* Action Handler */
+export const getPost = postId => async dispatch => {
+  dispatch({ type: GET_POST });
+
+  try {
+    const response = await PostsAPI.getPost(postId);
+    return getPostSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: GET_POST_ERROR, error });
+  }
+};
+
+export const getPostSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.posts);
+  const { posts } = normalized.entities;
+
+  dispatch(entities.mergePosts(posts));
+
+  dispatch({ type: GET_POST_SUCCESS });
+
+  return normalized.result;
+};
+
 const ACTION_HANDLERS = {
   [GET_POSTS]: state => ({
     error: null,
@@ -41,6 +73,18 @@ const ACTION_HANDLERS = {
     isLoading: false,
   }),
   [GET_POSTS_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
+  [GET_POST]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [GET_POST_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [GET_POST_SUCCESS]: state => ({
     error: null,
     isLoading: false,
   }),

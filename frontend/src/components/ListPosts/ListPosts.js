@@ -50,7 +50,6 @@ class ListPosts extends Component {
   render() {
     const { selectedFilter, categories, posts, category } = this.props;
 
-    console.log(selectedFilter);
     return (
       <div className="posts">
         {posts.length === 0 && <h4 className="red-text">{'> No posts found <'}</h4>}

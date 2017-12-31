@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import Header from '../Header';
 import ListPosts from '../ListPosts';
+import EditPost from '../EditPost';
 
 class App extends Component {
   constructor(props) {
@@ -33,6 +34,11 @@ class App extends Component {
             render={({ history, match }) => (
               <ListPosts selectedFilter={selectedFilter} category={match.params.categoryName} />
             )}
+          />
+
+          <Route
+            path="/posts/:postId/edit"
+            render={({ history, match }) => <EditPost postId={match.params.postId} />}
           />
         </section>
       </div>
