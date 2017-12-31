@@ -1,4 +1,4 @@
-import { MERGE_CATEGORIES, MERGE_POSTS, DEMERGE_POST } from '../actions';
+import { MERGE_CATEGORIES, MERGE_POSTS } from '../actions';
 
 export const mergeCategories = (categories = {}) => ({
   type: MERGE_CATEGORIES,
@@ -8,11 +8,6 @@ export const mergeCategories = (categories = {}) => ({
 export const mergePosts = (posts = {}) => ({
   type: MERGE_POSTS,
   posts,
-});
-
-export const demergePost = (post = {}) => ({
-  type: DEMERGE_POST,
-  post,
 });
 
 /* Action Handler */
@@ -31,17 +26,6 @@ const ACTION_HANDLERS = {
       ...state,
       posts: {
         ...state.posts,
-        ...posts,
-      },
-    };
-  },
-  [DEMERGE_POST]: (state, { post }) => {
-    const { ...posts } = state.posts;
-    delete posts[post];
-
-    return {
-      ...state,
-      posts: {
         ...posts,
       },
     };

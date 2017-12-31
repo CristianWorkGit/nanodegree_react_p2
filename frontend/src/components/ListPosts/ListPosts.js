@@ -69,12 +69,12 @@ class ListPosts extends Component {
                   </Link>
                 </div>
                 <div className="post-delete">
-                  <input
-                    type="button"
-                    onClick={this.onClickDelete(post.id)}
-                    value="DELETE"
+                  <button
                     className="button-error pure-button"
-                  />
+                    onClick={() => this.onClickDelete(post.id)}
+                  >
+                    DELETE
+                  </button>
                 </div>
               </div>
               <div className="post-header">

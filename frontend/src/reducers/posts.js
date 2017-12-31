@@ -23,10 +23,7 @@ export const getPosts = () => async dispatch => {
   dispatch({ type: GET_POSTS });
 
   try {
-    console.log('CHEGOU1');
     const response = await PostsAPI.listAllPosts();
-    console.log('CHEGOU2');
-    console.log(response);
     return getPostsSuccess({ response, dispatch });
   } catch (error) {
     dispatch({ type: GET_POSTS_ERROR, error });
@@ -103,7 +100,7 @@ export const deletePostSuccess = ({ response, dispatch }) => {
   const normalized = normalize(response, schemas.posts);
   const { posts } = normalized.entities;
 
-  dispatch(entities.demergePost(posts));
+  dispatch(entities.mergePosts(posts));
 
   dispatch({ type: DELETE_POST_SUCCESS });
 

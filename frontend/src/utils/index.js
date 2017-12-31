@@ -17,7 +17,7 @@ export const serializeParams = params => {
 
 export const xhr = async (url, options) => {
   let headers = Object.assign({}, JSONHeaders);
-  const token = 'whatever-you-want';
+  const token = 'fadsfasf';
 
   if (options.searchParams) {
     url += '?' + serializeParams(options.searchParams);
