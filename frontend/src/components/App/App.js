@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import Header from '../Header';
 import ListPosts from '../ListPosts';
 import EditPost from '../EditPost';
+import EditComment from '../EditComment';
 import AddPost from '../AddPost';
 import ListComments from '../ListComments';
 
@@ -55,6 +56,17 @@ class App extends Component {
                 history={history}
                 selectedFilter={selectedFilter}
                 postId={match.params.postId}
+              />
+            )}
+          />
+
+          <Route
+            path="/posts/:postId/comments/:commentId/edit"
+            render={({ history, match }) => (
+              <EditComment
+                history={history}
+                postId={match.params.postId}
+                commentId={match.params.commentId}
               />
             )}
           />

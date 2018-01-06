@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
 import { getPost, editPost } from '../../reducers/posts';
-import AddEditPost from '../AddEditPost/AddEditPost';
+import AddEditPost from '../AddEditPost';
 
 const stateCategories = state => Object.values(state.entities.categories);
 const statePosts = state => Object.values(state.entities.posts);
