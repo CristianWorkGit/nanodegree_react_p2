@@ -67,7 +67,7 @@ export const addComment = data => async dispatch => {
   dispatch({ type: ADD_COMMENT });
 
   try {
-    const response = await CommentsAPI.addComment(data);
+    const response = await CommentsAPI.createComment(data);
     return addCommentSuccess({ response, dispatch });
   } catch (error) {
     dispatch({ type: ADD_COMMENT_ERROR, error });

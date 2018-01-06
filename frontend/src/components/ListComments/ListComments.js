@@ -58,6 +58,13 @@ class ListComments extends Component {
     const { post, comments } = this.props;
     return (
       <div className="comments">
+        <div className="post-options">
+          <div className="post-edit">
+            <Link to={`/posts/${post.id}/comments/add`} className="button-secondary pure-button">
+              ADD COMMENTS
+            </Link>
+          </div>
+        </div>
         <div className="post-header">
           <h1 className="post-title">{post.title}</h1>
         </div>
@@ -67,7 +74,16 @@ class ListComments extends Component {
             comments.length > 0 &&
             comments.map(comment => (
               <div key={comment.id} className="comment">
-                <div className="comment-options" />
+                <div className="comment-options">
+                  <div className="comment-edit">
+                    <Link
+                      to={`/posts/${post.id}/comments/${comment.id}/edit`}
+                      className="button-secondary pure-button"
+                    >
+                      EDIT
+                    </Link>
+                  </div>
+                </div>
                 <div className="comment-body">
                   <span className="comment-content">{comment.body}</span>
                 </div>

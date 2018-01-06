@@ -79,11 +79,15 @@ class AddEditPost extends Component {
               </div>
             </div>
             <div className="post-header">
-              <label htmlFor="title">Title:</label>
+              <label htmlFor="title">
+                <strong>Title:</strong>
+              </label>
               <input type="text" id="title" value={title.value} onChange={this.handleChange} />
             </div>
             <div className="post-body">
-              <label htmlFor="title">Body:</label>
+              <label htmlFor="title">
+                <strong>Body:</strong>
+              </label>
               <textarea id="body" value={body.value} onChange={this.handleChange} />
             </div>
 

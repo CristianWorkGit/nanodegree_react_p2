@@ -68,7 +68,7 @@ class AddEditComment extends Component {
               </div>
             </div>
             <div className="comment-body">
-              <label htmlFor="title">Body:</label>
+              <strong>Body:</strong>
               <textarea id="body" value={body.value} onChange={this.handleChange} />
             </div>
 

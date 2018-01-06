@@ -45,7 +45,8 @@ h4.red-text {
 textarea {
   width: 100%;
 }
-.postEdit .post-header {
+.postEdit .post-header,
+.commentEdit .comment-body {
   display: block;
 }
 .post-header,
@@ -60,6 +61,9 @@ textarea {
   display: flex;
   border-radius: 5px;
   text-align: center;
+}
+.commentEdit .comment-author {
+  margin: 10px auto;
 }
 .comment {
   padding: 10px;
