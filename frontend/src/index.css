@@ -78,6 +78,12 @@ textarea {
   font-size: 2em;
   width: 100%;
 }
+.post-header a {
+  text-decoration: none;
+  text-align: center;
+  margin: 0 auto;
+  color: #333;
+}
 .pure-button {
   color: white;
   border-radius: 5px;

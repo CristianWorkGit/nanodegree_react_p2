@@ -83,7 +83,9 @@ class ListComments extends Component {
           </div>
         </div>
         <div className="post-header">
-          <h1 className="post-title">{post.title}</h1>
+          <Link to={`/posts/${post.id}/show`}>
+            <h1 className="post-title">{post.title}</h1>
+          </Link>
         </div>
         <div className="comments-list">
           {comments.length === 0 && <h4 className="red-text">{'> No comments found <'}</h4>}
