@@ -8,7 +8,7 @@ const stateCategories = state => Object.values(state.entities.categories);
 const statePosts = state => Object.values(state.entities.posts);
 
 const statePost = (state, props) => {
-  const postId = props.postId;
+  const { postId } = props;
   return statePosts(state).filter(post => post.id === postId)[0];
 };
 

@@ -64,7 +64,7 @@ class Header extends Component {
             ))}
           </select>
           <Link className="button-secondary pure-button" to={`/posts/add`}>
-            ADD
+            ADD POST
           </Link>
         </div>
       </div>

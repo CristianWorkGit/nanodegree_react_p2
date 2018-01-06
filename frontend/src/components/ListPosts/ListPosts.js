@@ -86,6 +86,11 @@ class ListPosts extends Component {
                     DELETE
                   </button>
                 </div>
+                <div className="post-edit">
+                  <Link to={`/posts/${post.id}/comments`} className="button-secondary pure-button">
+                    COMMENTS
+                  </Link>
+                </div>
                 <div className="post-delete">
                   <button
                     className="button-yellow pure-button"

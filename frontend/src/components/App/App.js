@@ -5,6 +5,7 @@ import Header from '../Header';
 import ListPosts from '../ListPosts';
 import EditPost from '../EditPost';
 import AddPost from '../AddPost';
+import ListComments from '../ListComments';
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +47,17 @@ class App extends Component {
           />
 
           <Route path="/posts/add" render={({ history }) => <AddPost history={history} />} />
+
+          <Route
+            path="/posts/:postId/comments"
+            render={({ history, match }) => (
+              <ListComments
+                history={history}
+                selectedFilter={selectedFilter}
+                postId={match.params.postId}
+              />
+            )}
+          />
         </section>
       </div>
     );
