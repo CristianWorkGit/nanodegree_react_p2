@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getPost } from '../../reducers/posts';
-import { getComments } from '../../reducers/comments';
+import { getComments, deleteComment, voteComment } from '../../reducers/comments';
 import FILTERS from '../../utils/constants/FILTERS';
 
 import sortBy from 'sort-by';
@@ -44,6 +44,8 @@ const mapStateToProps = (state, props) => ({
 const mapActionCreators = {
   getPost,
   getComments,
+  deleteComment,
+  voteComment,
 };
 
 class ListComments extends Component {
@@ -53,6 +55,21 @@ class ListComments extends Component {
       getComments(postId);
     });
   }
+
+  onClickDelete = commentId => {
+    const { deleteComment } = this.props;
+    deleteComment(commentId);
+  };
+
+  onClickVote = (commentId, value) => {
+    const { voteComment } = this.props;
+
+    const changes = {
+      option: value,
+    };
+
+    voteComment(commentId, changes);
+  };
 
   render() {
     const { post, comments } = this.props;
@@ -82,6 +99,30 @@ class ListComments extends Component {
                     >
                       EDIT
                     </Link>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-error pure-button"
+                      onClick={() => this.onClickDelete(comment.id)}
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-yellow pure-button"
+                      onClick={() => this.onClickVote(comment.id, 'downVote')}
+                    >
+                      DOWN VOTE
+                    </button>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-green pure-button"
+                      onClick={() => this.onClickVote(comment.id, 'upVote')}
+                    >
+                      UP VOTE
+                    </button>
                   </div>
                 </div>
                 <div className="comment-body">

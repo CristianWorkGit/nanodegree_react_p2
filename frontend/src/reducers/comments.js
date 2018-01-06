@@ -17,6 +17,12 @@ import {
   EDIT_COMMENT,
   EDIT_COMMENT_ERROR,
   EDIT_COMMENT_SUCCESS,
+  DELETE_COMMENT,
+  DELETE_COMMENT_ERROR,
+  DELETE_COMMENT_SUCCESS,
+  VOTE_COMMENT,
+  VOTE_COMMENT_ERROR,
+  VOTE_COMMENT_SUCCESS,
 } from '../actions';
 
 export const getComments = postId => async dispatch => {
@@ -107,6 +113,50 @@ export const editCommentSuccess = ({ response, dispatch }) => {
   return normalized.result;
 };
 
+export const deleteComment = commentId => async dispatch => {
+  dispatch({ type: DELETE_COMMENT });
+
+  try {
+    const response = await CommentsAPI.deleteComment(commentId);
+    return deleteCommentSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: DELETE_COMMENT_ERROR, error });
+  }
+};
+
+export const deleteCommentSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.comments);
+  const { comments } = normalized.entities;
+
+  dispatch(entities.mergeComments(comments));
+
+  dispatch({ type: DELETE_COMMENT_SUCCESS });
+
+  return normalized.result;
+};
+
+export const voteComment = (commentId, changes) => async dispatch => {
+  dispatch({ type: VOTE_COMMENT });
+
+  try {
+    const response = await CommentsAPI.voteComment(commentId, changes);
+    return voteCommentSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: VOTE_COMMENT_ERROR, error });
+  }
+};
+
+export const voteCommentSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.comments);
+  const { comments } = normalized.entities;
+
+  dispatch(entities.mergeComments(comments));
+
+  dispatch({ type: VOTE_COMMENT_SUCCESS });
+
+  return normalized.result;
+};
+
 const ACTION_HANDLERS = {
   [GET_COMMENTS]: state => ({
     error: null,
@@ -153,6 +203,30 @@ const ACTION_HANDLERS = {
     isLoading: false,
   }),
   [ADD_COMMENT_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
+  [DELETE_COMMENT]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [DELETE_COMMENT_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [DELETE_COMMENT_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
+  [VOTE_COMMENT]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [VOTE_COMMENT_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [VOTE_COMMENT_SUCCESS]: state => ({
     error: null,
     isLoading: false,
   }),

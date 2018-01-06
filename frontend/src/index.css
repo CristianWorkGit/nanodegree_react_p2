@@ -100,7 +100,8 @@ textarea {
   margin: 0px 10px;
   display: inline-flex;
 }
-.post-options div {
+.post-options div,
+.comment-options div {
   margin-right: 10px;
 }
 .post-body {

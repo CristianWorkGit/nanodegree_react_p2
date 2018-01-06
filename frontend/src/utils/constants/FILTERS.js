@@ -12,7 +12,7 @@ export const FILTERS = [
   {
     label: 'Most Recent',
     value: 'recent',
-    apiValue: 'postDate',
+    apiValue: '-timestamp',
   },
 ];
 
