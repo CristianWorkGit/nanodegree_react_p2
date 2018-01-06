@@ -14,7 +14,7 @@ body {
   box-sizing: border-box;
   margin: 2rem 1.25em 1em 1.25em;
   padding: 10px;
-  background: #e5cace;
+  background: #eee;
   border-radius: 5px;
   border: 1px solid #aaa;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
