@@ -6,6 +6,7 @@ import ListPosts from '../ListPosts';
 import EditPost from '../EditPost';
 import EditComment from '../EditComment';
 import AddPost from '../AddPost';
+import ShowPost from '../ShowPost';
 import AddComment from '../AddComment';
 import ListComments from '../ListComments';
 
@@ -41,14 +42,23 @@ class App extends Component {
             )}
           />
 
+          <Route exact path="/posts/add" render={({ history }) => <AddPost history={history} />} />
+
           <Route
+            exact
+            path="/posts/:postId/show"
+            render={({ history, match }) => (
+              <ShowPost history={history} postId={match.params.postId} />
+            )}
+          />
+
+          <Route
+            exact
             path="/posts/:postId/edit"
             render={({ history, match }) => (
               <EditPost history={history} postId={match.params.postId} />
             )}
           />
-
-          <Route path="/posts/add" render={({ history }) => <AddPost history={history} />} />
 
           <Route
             exact
