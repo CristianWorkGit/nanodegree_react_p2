@@ -206,6 +206,18 @@ const ACTION_HANDLERS = {
     error: null,
     isLoading: false,
   }),
+  [VOTE_POST]: state => ({
+    error: null,
+    isLoading: true,
+  }),
+  [VOTE_POST_ERROR]: (state, { error }) => ({
+    error,
+    isLoading: false,
+  }),
+  [VOTE_POST_SUCCESS]: state => ({
+    error: null,
+    isLoading: false,
+  }),
 };
 
 export const initialState = {

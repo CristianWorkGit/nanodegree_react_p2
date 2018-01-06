@@ -1,4 +1,4 @@
-import { MERGE_CATEGORIES, MERGE_POSTS } from '../actions';
+import { MERGE_CATEGORIES, MERGE_POSTS, MERGE_COMMENTS } from '../actions';
 
 export const mergeCategories = (categories = {}) => ({
   type: MERGE_CATEGORIES,
@@ -8,6 +8,11 @@ export const mergeCategories = (categories = {}) => ({
 export const mergePosts = (posts = {}) => ({
   type: MERGE_POSTS,
   posts,
+});
+
+export const mergeComments = (comments = {}) => ({
+  type: MERGE_COMMENTS,
+  comments,
 });
 
 /* Action Handler */
@@ -30,12 +35,22 @@ const ACTION_HANDLERS = {
       },
     };
   },
+  [MERGE_COMMENTS]: (state, { comments }) => {
+    return {
+      ...state,
+      comments: {
+        ...state.comments,
+        ...comments,
+      },
+    };
+  },
 };
 
 /* Initial state default */
 export const initialState = {
   categories: {},
   posts: {},
+  comments: {},
 };
 
 export default function entitiesReducer(state = initialState, action) {
