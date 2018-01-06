@@ -54,7 +54,6 @@ class ListPosts extends Component {
 
   render() {
     const { posts } = this.props;
-
     return (
       <div className="posts">
         {posts.length === 0 && <h4 className="red-text">{'> No posts found <'}</h4>}
@@ -88,8 +87,13 @@ class ListPosts extends Component {
                   <strong>Author:</strong> {post.author}
                 </span>
                 <span className="post-comments">
-                  <strong>{post.commentCount}</strong>
-                  {post.commentCount > 1 ? ' comments' : ' comment'}
+                  <strong>Comments:</strong> {post.commentCount}
+                </span>
+                <span className="post-comments">
+                  <strong>Category:</strong> {post.category}
+                </span>
+                <span className="post-author">
+                  <strong>Vote Score:</strong> {post.voteScore}
                 </span>
               </div>
             </div>

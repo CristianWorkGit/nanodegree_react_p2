@@ -38,7 +38,9 @@ class Header extends Component {
     return (
       <div className="header">
         <div className="headerTitle">
-          <h1>Kahtnip</h1>
+          <Link to={`/`}>
+            <h1>Kahtnip</h1>
+          </Link>
         </div>
 
         <div className="headerCategories">
@@ -50,13 +52,20 @@ class Header extends Component {
         </div>
 
         <div className="headerOptions">
-          <select onChange={this.onSelectChange} value={selectedFilter} className="selectorFilter">
+          <select
+            onChange={this.onSelectChange}
+            value={selectedFilter}
+            className="selectorFilter pure-button button-secondary"
+          >
             {FILTERS.map(filter => (
               <option key={filter.value} value={filter.value} className="option">
                 {filter.label}
               </option>
             ))}
           </select>
+          <Link className="button-secondary pure-button" to={`/posts/add`}>
+            ADD
+          </Link>
         </div>
       </div>
     );

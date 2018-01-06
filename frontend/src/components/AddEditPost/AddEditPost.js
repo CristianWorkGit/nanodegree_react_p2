@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { v4 } from 'node-uuid';
+
+import './AddEditPost.css';
 
 class AddEditPost extends Component {
   constructor(props) {
@@ -43,6 +46,8 @@ class AddEditPost extends Component {
     if (!post) {
       data.author = author.value;
       data.category = category.value;
+      data.id = v4();
+      data.timestamp = Date.now();
     } else {
       data.post = {
         id: post.id,
@@ -86,9 +91,16 @@ class AddEditPost extends Component {
               <div className="post-info">
                 <span className="post-author">
                   <strong>Author:</strong>
+                  <input
+                    type="text"
+                    id="author"
+                    value={author.value}
+                    onChange={this.handleChange}
+                  />
                 </span>
                 <span className="post-category">
-                  <select value={category.value} onChange={this.handleChange}>
+                  <strong>Category:</strong>
+                  <select id="category" value={category.value} onChange={this.handleChange}>
                     <option value="">Select a category...</option>
                     {categories.map(category => (
                       <option key={category.path} value={category.path}>

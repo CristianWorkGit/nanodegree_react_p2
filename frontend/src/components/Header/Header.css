@@ -5,7 +5,13 @@
   padding: 2.5em 2em 0;
   border-bottom: 1px solid #eee;
 }
-.headerTitle h1 {
+
+.headerTitle a {
+  color: #333;
+  text-decoration: none;
+}
+
+.headerTitle a h1 {
   margin: 0.2em 0;
   font-size: 3em;
   font-weight: 300;
@@ -24,6 +30,11 @@
 
 .headerCategories {
   padding: 20px 0px;
+}
+
+.selectorFilter {
+  height: 32px;
+  margin-right: 15px;
 }
 
 .headerTitle {

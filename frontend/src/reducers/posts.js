@@ -17,6 +17,9 @@ import {
   DELETE_POST,
   DELETE_POST_SUCCESS,
   DELETE_POST_ERROR,
+  ADD_POST,
+  ADD_POST_SUCCESS,
+  ADD_POST_ERROR,
 } from '../actions';
 
 export const getPosts = () => async dispatch => {
@@ -59,6 +62,28 @@ export const getPostSuccess = ({ response, dispatch }) => {
   dispatch(entities.mergePosts(posts));
 
   dispatch({ type: GET_POST_SUCCESS });
+
+  return normalized.result;
+};
+
+export const addPost = data => async dispatch => {
+  dispatch({ type: ADD_POST });
+
+  try {
+    const response = await PostsAPI.createPost(data);
+    return addPostSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: ADD_POST_ERROR, error });
+  }
+};
+
+export const addPostSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.posts);
+  const { posts } = normalized.entities;
+
+  dispatch(entities.mergePosts(posts));
+
+  dispatch({ type: ADD_POST_SUCCESS });
 
   return normalized.result;
 };

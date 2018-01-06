@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import Header from '../Header';
 import ListPosts from '../ListPosts';
 import EditPost from '../EditPost';
+import AddPost from '../AddPost';
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class App extends Component {
             path="/"
             render={({ history }) => <ListPosts selectedFilter={selectedFilter} />}
           />
+
           <Route
             path="/categories/:categoryName/posts"
             render={({ history, match }) => (
@@ -42,6 +44,8 @@ class App extends Component {
               <EditPost history={history} postId={match.params.postId} />
             )}
           />
+
+          <Route path="/posts/add" render={({ history }) => <AddPost history={history} />} />
         </section>
       </div>
     );

@@ -20,5 +20,9 @@ export const DELETE_POST = 'DELETE_POST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_ERROR = 'DELETE_POST_ERROR';
 
+export const ADD_POST = 'ADD_POST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_ERROR = 'ADD_POST_ERROR';
+
 export const MERGE_POSTS = 'MERGE_POSTS';
 export const DEMERGE_POST = 'DEMERGE_POST';

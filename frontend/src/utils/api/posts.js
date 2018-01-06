@@ -20,6 +20,13 @@ export const PostsAPI = {
     });
   },
 
+  createPost(data) {
+    return xhr(`${API_BASE}/posts`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
   deletePost(postId) {
     return xhr(`${API_BASE}/posts/${postId}`, {
       method: 'DELETE',
