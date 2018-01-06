@@ -63,7 +63,7 @@ export const getPostSuccess = ({ response, dispatch }) => {
   const { posts } = normalized.entities;
 
   dispatch(entities.mergePosts(posts));
-  console.log(posts);
+
   dispatch({ type: GET_POST_SUCCESS });
 
   return normalized.result;

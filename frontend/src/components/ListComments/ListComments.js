@@ -58,7 +58,9 @@ class ListComments extends Component {
     const { post, comments } = this.props;
     return (
       <div className="comments">
-        <h1 className="post-title">{post.title}</h1>
+        <div className="post-header">
+          <h1 className="post-title">{post.title}</h1>
+        </div>
         <div className="comments-list">
           {comments.length === 0 && <h4 className="red-text">{'> No comments found <'}</h4>}
           {comments &&
