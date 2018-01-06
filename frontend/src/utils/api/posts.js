@@ -27,6 +27,13 @@ export const PostsAPI = {
     });
   },
 
+  votePost(postId, changes) {
+    return xhr(`${API_BASE}/posts/${postId}`, {
+      method: 'POST',
+      body: JSON.stringify(changes),
+    });
+  },
+
   deletePost(postId) {
     return xhr(`${API_BASE}/posts/${postId}`, {
       method: 'DELETE',

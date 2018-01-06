@@ -52,10 +52,16 @@ textarea {
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .button-secondary {
-  background: rgb(66, 184, 221); /* this is a light blue */
+  background: rgb(66, 184, 221);
 }
 .button-error {
-  background: rgb(202, 60, 60); /* this is a maroon */
+  background: rgb(202, 60, 60);
+}
+.button-yellow {
+  background: rgb(223, 117, 20);
+}
+.button-green {
+  background: rgb(28, 184, 65);
 }
 .post-options {
   width: 100%;

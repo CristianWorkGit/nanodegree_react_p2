@@ -20,6 +20,9 @@ import {
   ADD_POST,
   ADD_POST_SUCCESS,
   ADD_POST_ERROR,
+  VOTE_POST,
+  VOTE_POST_SUCCESS,
+  VOTE_POST_ERROR,
 } from '../actions';
 
 export const getPosts = () => async dispatch => {
@@ -106,6 +109,28 @@ export const editPostSuccess = ({ response, dispatch }) => {
   dispatch(entities.mergePosts(posts));
 
   dispatch({ type: EDIT_POST_SUCCESS });
+
+  return normalized.result;
+};
+
+export const votePost = (postId, changes) => async dispatch => {
+  dispatch({ type: VOTE_POST });
+
+  try {
+    const response = await PostsAPI.votePost(postId, changes);
+    return votePostSuccess({ response, dispatch });
+  } catch (error) {
+    dispatch({ type: VOTE_POST_ERROR, error });
+  }
+};
+
+export const votePostSuccess = ({ response, dispatch }) => {
+  const normalized = normalize(response, schemas.posts);
+  const { posts } = normalized.entities;
+
+  dispatch(entities.mergePosts(posts));
+
+  dispatch({ type: VOTE_POST_SUCCESS });
 
   return normalized.result;
 };

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getPosts, deletePost } from '../../reducers/posts';
+import { getPosts, deletePost, votePost } from '../../reducers/posts';
 import FILTERS from '../../utils/constants/FILTERS';
 
 import sortBy from 'sort-by';
@@ -39,6 +39,7 @@ const mapStateToProps = (state, props) => ({
 const mapActionCreators = {
   getPosts,
   deletePost,
+  votePost,
 };
 
 class ListPosts extends Component {
@@ -50,6 +51,16 @@ class ListPosts extends Component {
   onClickDelete = postId => {
     const { deletePost } = this.props;
     deletePost(postId);
+  };
+
+  onClickVote = (postId, value) => {
+    const { votePost } = this.props;
+
+    const changes = {
+      option: value,
+    };
+
+    votePost(postId, changes);
   };
 
   render() {
@@ -73,6 +84,22 @@ class ListPosts extends Component {
                     onClick={() => this.onClickDelete(post.id)}
                   >
                     DELETE
+                  </button>
+                </div>
+                <div className="post-delete">
+                  <button
+                    className="button-yellow pure-button"
+                    onClick={() => this.onClickVote(post.id, 'downVote')}
+                  >
+                    DOWN VOTE
+                  </button>
+                </div>
+                <div className="post-delete">
+                  <button
+                    className="button-green pure-button"
+                    onClick={() => this.onClickVote(post.id, 'upVote')}
+                  >
+                    UP VOTE
                   </button>
                 </div>
               </div>
