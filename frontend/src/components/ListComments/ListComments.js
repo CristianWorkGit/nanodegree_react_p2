@@ -49,6 +49,11 @@ const mapActionCreators = {
 };
 
 class ListComments extends Component {
+  static defaultProps = {
+    post: {},
+    comments: [],
+  };
+
   componentDidMount() {
     const { getPost, postId, getComments } = this.props;
     getPost(postId).then(result => {

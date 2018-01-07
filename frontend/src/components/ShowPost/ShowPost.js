@@ -27,6 +27,10 @@ const mapActionCreators = {
 };
 
 class ListPosts extends Component {
+  static defaultProps = {
+    post: {},
+  };
+
   componentDidMount() {
     const { getPost, postId } = this.props;
     getPost(postId);
