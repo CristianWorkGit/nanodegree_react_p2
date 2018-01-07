@@ -8,15 +8,15 @@ const stateCategories = state => Object.values(state.entities.categories);
 const statePosts = state => Object.values(state.entities.posts);
 
 const statePost = (state, props) => {
-  const { postId } = props;
-  return statePosts(state).filter(post => post.id === postId)[0];
+  const { match } = props;
+  return statePosts(state).filter(post => post.id === match.params.postId)[0];
 };
 
 const mapStateToProps = (state, props) => ({
   post: statePost(state, props),
   categories: stateCategories(state),
   history: props.history,
-  postId: props.postId,
+  match: props.match,
 });
 
 const mapActionCreators = {
@@ -26,15 +26,15 @@ const mapActionCreators = {
 
 class EditPost extends Component {
   componentDidMount() {
-    const { getPost, postId } = this.props;
-    getPost(postId);
+    const { getPost, match } = this.props;
+    getPost(match.params.postId);
   }
 
   handleOnSubmitForm = data => {
-    const { editPost, history, postId } = this.props;
+    const { editPost, history, match } = this.props;
     const { post, ...otherProps } = data;
 
-    editPost(post.id, otherProps).then(() => history.replace(`/posts/${postId}/show`));
+    editPost(post.id, otherProps).then(() => history.replace(`/posts/${match.params.postId}/show`));
   };
 
   render() {

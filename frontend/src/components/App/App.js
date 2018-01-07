@@ -42,23 +42,11 @@ class App extends Component {
             )}
           />
 
-          <Route exact path="/posts/add" render={({ history }) => <AddPost history={history} />} />
+          <Route exact path="/posts/add" component={AddPost} />
 
-          <Route
-            exact
-            path="/posts/:postId/show"
-            render={({ history, match }) => (
-              <ShowPost history={history} postId={match.params.postId} />
-            )}
-          />
+          <Route exact path="/posts/:postId/show" component={ShowPost} />
 
-          <Route
-            exact
-            path="/posts/:postId/edit"
-            render={({ history, match }) => (
-              <EditPost history={history} postId={match.params.postId} />
-            )}
-          />
+          <Route exact path="/posts/:postId/edit" component={EditPost} />
 
           <Route
             exact
@@ -72,13 +60,7 @@ class App extends Component {
             )}
           />
 
-          <Route
-            exact
-            path="/posts/:postId/comments/add"
-            render={({ history, match }) => (
-              <AddComment history={history} postId={match.params.postId} />
-            )}
-          />
+          <Route exact path="/posts/:postId/comments/add" component={AddComment} />
 
           <Route exact path="/posts/:postId/comments/:commentId/edit" component={EditComment} />
         </section>

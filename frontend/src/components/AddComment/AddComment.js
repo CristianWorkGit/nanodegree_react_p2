@@ -5,7 +5,7 @@ import { addComment } from '../../actions/comments';
 import AddEditComment from '../AddEditComment';
 
 const mapStateToProps = (state, props) => ({
-  postId: props.postId,
+  match: props.match,
   history: props.history,
 });
 
@@ -15,15 +15,15 @@ const mapActionCreators = {
 
 class AddComment extends Component {
   handleOnSubmitForm = data => {
-    const { addComment, history, postId } = this.props;
+    const { addComment, history, match } = this.props;
 
-    addComment(data).then(() => history.replace(`/posts/${postId}/comments`));
+    addComment(data).then(() => history.replace(`/posts/${match.params.postId}/comments`));
   };
 
   render() {
-    const { postId } = this.props;
+    const { match } = this.props;
 
-    return <AddEditComment postId={postId} onSubmit={this.handleOnSubmitForm} />;
+    return <AddEditComment postId={match.params.postId} onSubmit={this.handleOnSubmitForm} />;
   }
 }
 
