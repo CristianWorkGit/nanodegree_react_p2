@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getPost } from '../../reducers/posts';
-import { getComments, deleteComment, voteComment } from '../../reducers/comments';
+import { getPost } from '../../actions/post';
+import { getComments, deleteComment, voteComment } from '../../actions/comments';
 import FILTERS from '../../utils/constants/FILTERS';
 
 import sortBy from 'sort-by';

@@ -80,17 +80,7 @@ class App extends Component {
             )}
           />
 
-          <Route
-            exact
-            path="/posts/:postId/comments/:commentId/edit"
-            render={({ history, match }) => (
-              <EditComment
-                history={history}
-                postId={match.params.postId}
-                commentId={match.params.commentId}
-              />
-            )}
-          />
+          <Route exact path="/posts/:postId/comments/:commentId/edit" component={EditComment} />
         </section>
       </div>
     );

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getCategories } from '../../reducers/category';
+import { getCategories } from '../../actions/category';
 import FILTERS from '../../utils/constants/FILTERS';
 
 import './Header.css';

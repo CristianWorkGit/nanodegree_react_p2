@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
-import { addComment } from '../../reducers/comments';
+import { addComment } from '../../actions/comments';
 import AddEditComment from '../AddEditComment';
 
 const mapStateToProps = (state, props) => ({

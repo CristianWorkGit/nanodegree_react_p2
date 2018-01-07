@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
-import { getPosts } from '../../reducers/posts';
+import { getPosts } from '../../actions/post';
 import FILTERS from '../../utils/constants/FILTERS';
 import Post from '../Post';
 
