@@ -16,8 +16,17 @@ class AddEditComment extends Component {
   }
 
   componentDidMount() {
-    const { comment } = this.props;
+    this.fetchData(this.props);
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.fetchData(nextProps);
+    }
+  }
+
+  fetchData(props) {
+    const { comment, postId } = this.props;
     if (comment) {
       this.setState({
         body: { value: comment.body },

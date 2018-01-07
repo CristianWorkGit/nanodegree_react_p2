@@ -24,8 +24,17 @@ class AddEditPost extends Component {
   }
 
   componentDidMount() {
-    const { post } = this.props;
+    this.fetchData(this.props);
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.fetchData(nextProps);
+    }
+  }
+
+  fetchData(props) {
+    const { post } = props;
     if (post) {
       this.setState({
         body: { value: post.body },
