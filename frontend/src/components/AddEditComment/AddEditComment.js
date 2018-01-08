@@ -26,7 +26,7 @@ class AddEditComment extends Component {
   }
 
   fetchData(props) {
-    const { comment, postId } = this.props;
+    const { comment } = this.props;
     if (comment) {
       this.setState({
         body: { value: comment.body },

@@ -21,9 +21,11 @@ const mapActionCreators = {
 
 class Header extends Component {
   componentDidMount() {
-    const { getCategories } = this.props;
+    const { getCategories, categories } = this.props;
 
-    getCategories();
+    if (!categories || !categories.length) {
+      getCategories();
+    }
   }
 
   onSelectChange = event => {
