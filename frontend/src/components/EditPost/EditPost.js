@@ -31,10 +31,10 @@ class EditPost extends Component {
   }
 
   handleOnSubmitForm = data => {
-    const { editPost, history, match } = this.props;
+    const { editPost, history } = this.props;
     const { post, ...otherProps } = data;
 
-    editPost(post.id, otherProps).then(() => history.replace(`/posts/${match.params.postId}/show`));
+    editPost(post.id, otherProps).then(() => history.replace(`/${post.category}/${post.id}`));
   };
 
   render() {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 
-import { getPosts } from '../../actions/post';
+import { getPosts, deletePost, votePost } from '../../actions/post';
 import FILTERS from '../../utils/constants/FILTERS';
 import Post from '../Post';
 
@@ -34,10 +34,13 @@ const mapStateToProps = (state, props) => ({
   posts: statePosts(state, props),
   categories: stateCategories(state),
   selectedFilter: props.selectedFilter,
+  history: props.history,
 });
 
 const mapActionCreators = {
   getPosts,
+  deletePost,
+  votePost,
 };
 
 class ListPosts extends Component {
@@ -46,6 +49,21 @@ class ListPosts extends Component {
     getPosts();
   }
 
+  onClickDelete = postId => {
+    const { deletePost, history } = this.props;
+    deletePost(postId).then(() => history.replace(`/`));
+  };
+
+  onClickVote = (postId, value) => {
+    const { votePost } = this.props;
+
+    const changes = {
+      option: value,
+    };
+
+    votePost(postId, changes);
+  };
+
   render() {
     const { posts } = this.props;
     return (
@@ -53,7 +71,15 @@ class ListPosts extends Component {
         {posts.length === 0 && <h4 className="red-text">{'> No posts found <'}</h4>}
         {posts &&
           posts.length > 0 &&
-          posts.map(post => <Post key={post.id} post={post} showDetails={false} />)}
+          posts.map(post => (
+            <Post
+              key={post.id}
+              post={post}
+              onClickVote={this.onClickVote}
+              onClickDelete={this.onClickDelete}
+              listView={true}
+            />
+          ))}
       </div>
     );
   }

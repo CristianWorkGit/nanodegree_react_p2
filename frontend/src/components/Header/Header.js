@@ -47,7 +47,7 @@ class Header extends Component {
 
         <div className="headerCategories">
           {categories.map(category => (
-            <Link key={category.name} to={`/categories/${category.path}/posts`}>
+            <Link key={category.name} to={`/${category.path}`}>
               {category.name}
             </Link>
           ))}
@@ -65,7 +65,7 @@ class Header extends Component {
               </option>
             ))}
           </select>
-          <Link className="button-secondary pure-button" to={`/posts/add`}>
+          <Link className="button-secondary pure-button" to={`/add-post`}>
             ADD POST
           </Link>
         </div>

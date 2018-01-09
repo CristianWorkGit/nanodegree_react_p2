@@ -8,7 +8,6 @@ import EditComment from '../EditComment';
 import AddPost from '../AddPost';
 import ShowPost from '../ShowPost';
 import AddComment from '../AddComment';
-import ListComments from '../ListComments';
 
 class App extends Component {
   constructor(props) {
@@ -29,30 +28,25 @@ class App extends Component {
         <Header selectedFilter={selectedFilter} onChangeFilter={this.onChangeFilter} />
 
         <section className="body-main-container">
-          <Route
-            exact
-            path="/"
-            render={({ history }) => <ListPosts selectedFilter={selectedFilter} />}
-          />
+          <Route exact path="/add-post" component={AddPost} />
 
           <Route
-            path="/categories/:categoryName/posts"
+            exact
+            path="/:categoryName?"
             render={({ history, match }) => (
-              <ListPosts selectedFilter={selectedFilter} category={match.params.categoryName} />
+              <ListPosts
+                selectedFilter={selectedFilter}
+                history={history}
+                category={match.params.categoryName}
+              />
             )}
           />
 
-          <Route exact path="/posts/add" component={AddPost} />
-
-          <Route exact path="/posts/:postId/show" component={ShowPost} />
-
-          <Route exact path="/posts/:postId/edit" component={EditPost} />
-
           <Route
             exact
-            path="/posts/:postId/comments"
+            path="/:categoryName/:postId"
             render={({ history, match }) => (
-              <ListComments
+              <ShowPost
                 history={history}
                 selectedFilter={selectedFilter}
                 postId={match.params.postId}
@@ -60,9 +54,11 @@ class App extends Component {
             )}
           />
 
-          <Route exact path="/posts/:postId/comments/add" component={AddComment} />
+          <Route exact path="/:categoryName/:postId/edit" component={EditPost} />
 
-          <Route exact path="/posts/:postId/comments/:commentId/edit" component={EditComment} />
+          <Route exact path="/:categoryName/:postId/add-comment" component={AddComment} />
+
+          <Route exact path="/:categoryName/:postId/:commentId/edit" component={EditComment} />
         </section>
       </div>
     );

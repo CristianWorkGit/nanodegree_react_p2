@@ -1,71 +1,174 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { getPost, deletePost, votePost } from '../../actions/post';
-import Post from '../Post';
+import { getPost } from '../../actions/post';
+import { getComments, deleteComment, voteComment } from '../../actions/comments';
+import FILTERS from '../../utils/constants/FILTERS';
 
-const stateCategories = state => Object.values(state.entities.categories);
+import sortBy from 'sort-by';
 
 const statePosts = state => Object.values(state.entities.posts);
-
 const statePost = (state, props) => {
-  const { match } = props;
-  return statePosts(state).filter(post => post.id === match.params.postId)[0];
+  const { postId } = props;
+  return statePosts(state).filter(post => post.id === postId)[0];
+};
+
+const stateComments = (state, props) => {
+  const { postId = '' } = props;
+  const sortByProp = FILTERS.filter(
+    fieldToFilter => fieldToFilter.value === props.selectedFilter
+  )[0];
+
+  return Object.values(state.entities.comments)
+    .filter(comment => {
+      if (comment.deleted) {
+        return false;
+      }
+      if (postId && comment.parentId !== postId) {
+        return false;
+      }
+
+      return true;
+    })
+    .sort(sortBy(`${sortByProp.apiValue}`));
 };
 
 const mapStateToProps = (state, props) => ({
-  category: props.category,
   post: statePost(state, props),
-  match: props.match,
-  history: props.history,
-  categories: stateCategories(state),
+  comments: stateComments(state, props),
+  postId: props.postId,
+  selectedFilter: props.selectedFilter,
 });
 
 const mapActionCreators = {
   getPost,
-  deletePost,
-  votePost,
+  getComments,
+  deleteComment,
+  voteComment,
 };
 
-class ListPosts extends Component {
+class ListComments extends Component {
   static defaultProps = {
     post: {},
+    comments: [],
   };
 
   componentDidMount() {
-    const { getPost, match } = this.props;
-    getPost(match.params.postId);
+    const { getPost, postId, getComments } = this.props;
+    getPost(postId).then(result => {
+      getComments(postId);
+    });
   }
 
-  onClickDelete = () => {
-    const { deletePost, match, history } = this.props;
-    deletePost(match.params.postId).then(() => history.replace(`/`));
+  onClickDelete = commentId => {
+    const { deleteComment } = this.props;
+    deleteComment(commentId);
   };
 
-  onClickVote = value => {
-    const { votePost, match } = this.props;
+  onClickVote = (commentId, value) => {
+    const { voteComment } = this.props;
 
     const changes = {
       option: value,
     };
 
-    votePost(match.params.postId, changes);
+    voteComment(commentId, changes);
   };
 
   render() {
-    const { post } = this.props;
-
+    const { post, comments } = this.props;
     return (
-      <div className="posts">
-        <Post
-          post={post}
-          showDetails={true}
-          onClickVote={this.onClickVote}
-          onClickDelete={this.onClickDelete}
-        />
+      <div className="comments">
+        <div className="post-options">
+          <div className="post-edit">
+            <Link
+              to={`/${post.id}/${post.id}/add-comment`}
+              className="button-secondary pure-button"
+            >
+              ADD COMMENTS
+            </Link>
+          </div>
+        </div>
+        <div className="post-header">
+          <Link to={`/${post.category}/${post.id}`}>
+            <h1 className="post-title">{post.title}</h1>
+          </Link>
+        </div>
+        <div className="post-info">
+          <span className="post-author">
+            <strong>Author:</strong> {post.author}
+          </span>
+          <span className="post-comments">
+            <strong>Comments:</strong> {post.commentCount}
+          </span>
+          <span className="post-comments">
+            <strong>Category:</strong> {post.category}
+          </span>
+          <span className="post-author">
+            <strong>Vote Score:</strong> {post.voteScore}
+          </span>
+        </div>
+        <div className="post-body">
+          <span className="post-content">{post.body}</span>
+        </div>
+        <div className="comments-list">
+          {comments.length === 0 && <h4 className="red-text">{'> No comments found <'}</h4>}
+          {comments &&
+            comments.length > 0 &&
+            comments.map(comment => (
+              <div key={comment.id} className="comment">
+                <div className="comment-options">
+                  <div className="comment-edit">
+                    <Link
+                      to={`/${post.category}/${post.id}/${comment.id}/edit`}
+                      className="button-secondary pure-button"
+                    >
+                      EDIT
+                    </Link>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-error pure-button"
+                      onClick={() => this.onClickDelete(comment.id)}
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-yellow pure-button"
+                      onClick={() => this.onClickVote(comment.id, 'downVote')}
+                    >
+                      DOWN VOTE
+                    </button>
+                  </div>
+                  <div className="post-delete">
+                    <button
+                      className="button-green pure-button"
+                      onClick={() => this.onClickVote(comment.id, 'upVote')}
+                    >
+                      UP VOTE
+                    </button>
+                  </div>
+                </div>
+                <div className="comment-body">
+                  <span className="comment-content">{comment.body}</span>
+                </div>
+                <div className="comment-info">
+                  <span className="comment-author">
+                    <strong>Author:</strong> {comment.author}
+                  </span>
+                  <span className="comment-author">
+                    <strong>Vote Score:</strong> {comment.voteScore}
+                  </span>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapActionCreators)(ListPosts);
+export default connect(mapStateToProps, mapActionCreators)(ListComments);

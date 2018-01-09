@@ -33,7 +33,7 @@ class EditComment extends Component {
     const { comment, ...otherProps } = data;
 
     editComment(comment.id, otherProps).then(() =>
-      history.replace(`/posts/${match.params.postId}/comments`)
+      history.replace(`/${match.params.categoryName}/${match.params.postId}`)
     );
   };
 

@@ -17,7 +17,9 @@ class AddComment extends Component {
   handleOnSubmitForm = data => {
     const { addComment, history, match } = this.props;
 
-    addComment(data).then(() => history.replace(`/posts/${match.params.postId}/comments`));
+    addComment(data).then(() =>
+      history.replace(`/${match.params.categoryName}/${match.params.postId}`)
+    );
   };
 
   render() {
