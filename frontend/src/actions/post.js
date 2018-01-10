@@ -27,7 +27,9 @@ export const getPostSuccess = ({ response, dispatch }) => {
   const normalized = normalize(response, schemas.posts);
   const { posts } = normalized.entities;
 
-  dispatch(entities.mergePosts(posts));
+  if (Object.keys(response).length) {
+    dispatch(entities.mergePosts(posts));
+  }
 
   return normalized.result;
 };
@@ -80,10 +82,12 @@ export const deletePost = postId => async dispatch => {
 };
 
 export const deletePostSuccess = ({ response, dispatch }) => {
+  const postId = response.id;
   const normalized = normalize(response, schemas.posts);
   const { posts } = normalized.entities;
 
   dispatch(entities.mergePosts(posts));
+  dispatch(entities.demergeCommentsRelatedToPost(postId));
 
   return normalized.result;
 };

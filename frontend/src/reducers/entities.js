@@ -1,4 +1,9 @@
-import { MERGE_CATEGORIES, MERGE_POSTS, MERGE_COMMENTS } from '../actions';
+import {
+  MERGE_CATEGORIES,
+  MERGE_POSTS,
+  MERGE_COMMENTS,
+  DEMERGE_COMMENTS_RELATED,
+} from '../actions';
 
 const ACTION_HANDLERS = {
   [MERGE_CATEGORIES]: (state, { categories }) => {
@@ -25,6 +30,18 @@ const ACTION_HANDLERS = {
       comments: {
         ...state.comments,
         ...comments,
+      },
+    };
+  },
+  [DEMERGE_COMMENTS_RELATED]: (state, { postId }) => {
+    const comments =
+      postId && postId !== ''
+        ? Object.values(state.comments).filter(comment => comment.parentId !== postId)
+        : state.comments;
+    return {
+      ...state,
+      comments: {
+        comments,
       },
     };
   },

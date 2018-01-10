@@ -1,14 +1,22 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import { getPost } from '../../actions/post';
+import { getPost, deletePost, votePost } from '../../actions/post';
 import { getComments, deleteComment, voteComment } from '../../actions/comments';
 import FILTERS from '../../utils/constants/FILTERS';
+import Post from '../Post';
 
 import sortBy from 'sort-by';
 
-const statePosts = state => Object.values(state.entities.posts);
+const statePosts = (state, props) => {
+  return Object.values(state.entities.posts).filter(post => {
+    if (post.deleted) {
+      return false;
+    }
+    return true;
+  });
+};
+
 const statePost = (state, props) => {
   const { postId } = props;
   return statePosts(state).filter(post => post.id === postId)[0];
@@ -43,6 +51,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapActionCreators = {
   getPost,
+  deletePost,
+  votePost,
   getComments,
   deleteComment,
   voteComment,
@@ -61,12 +71,27 @@ class ListComments extends Component {
     });
   }
 
-  onClickDelete = commentId => {
+  onClickDelete = postId => {
+    const { deletePost, history } = this.props;
+    deletePost(postId).then(() => history.replace(`/`));
+  };
+
+  onClickVote = (postId, value) => {
+    const { votePost } = this.props;
+
+    const changes = {
+      option: value,
+    };
+
+    votePost(postId, changes);
+  };
+
+  onClickDeleteComment = commentId => {
     const { deleteComment } = this.props;
     deleteComment(commentId);
   };
 
-  onClickVote = (commentId, value) => {
+  onClickVoteComment = (commentId, value) => {
     const { voteComment } = this.props;
 
     const changes = {
@@ -79,93 +104,19 @@ class ListComments extends Component {
   render() {
     const { post, comments } = this.props;
     return (
-      <div className="comments">
-        <div className="post-options">
-          <div className="post-edit">
-            <Link
-              to={`/${post.id}/${post.id}/add-comment`}
-              className="button-secondary pure-button"
-            >
-              ADD COMMENTS
-            </Link>
-          </div>
-        </div>
-        <div className="post-header">
-          <Link to={`/${post.category}/${post.id}`}>
-            <h1 className="post-title">{post.title}</h1>
-          </Link>
-        </div>
-        <div className="post-info">
-          <span className="post-author">
-            <strong>Author:</strong> {post.author}
-          </span>
-          <span className="post-comments">
-            <strong>Comments:</strong> {post.commentCount}
-          </span>
-          <span className="post-comments">
-            <strong>Category:</strong> {post.category}
-          </span>
-          <span className="post-author">
-            <strong>Vote Score:</strong> {post.voteScore}
-          </span>
-        </div>
-        <div className="post-body">
-          <span className="post-content">{post.body}</span>
-        </div>
-        <div className="comments-list">
-          {comments.length === 0 && <h4 className="red-text">{'> No comments found <'}</h4>}
-          {comments &&
-            comments.length > 0 &&
-            comments.map(comment => (
-              <div key={comment.id} className="comment">
-                <div className="comment-options">
-                  <div className="comment-edit">
-                    <Link
-                      to={`/${post.category}/${post.id}/${comment.id}/edit`}
-                      className="button-secondary pure-button"
-                    >
-                      EDIT
-                    </Link>
-                  </div>
-                  <div className="post-delete">
-                    <button
-                      className="button-error pure-button"
-                      onClick={() => this.onClickDelete(comment.id)}
-                    >
-                      DELETE
-                    </button>
-                  </div>
-                  <div className="post-delete">
-                    <button
-                      className="button-yellow pure-button"
-                      onClick={() => this.onClickVote(comment.id, 'downVote')}
-                    >
-                      DOWN VOTE
-                    </button>
-                  </div>
-                  <div className="post-delete">
-                    <button
-                      className="button-green pure-button"
-                      onClick={() => this.onClickVote(comment.id, 'upVote')}
-                    >
-                      UP VOTE
-                    </button>
-                  </div>
-                </div>
-                <div className="comment-body">
-                  <span className="comment-content">{comment.body}</span>
-                </div>
-                <div className="comment-info">
-                  <span className="comment-author">
-                    <strong>Author:</strong> {comment.author}
-                  </span>
-                  <span className="comment-author">
-                    <strong>Vote Score:</strong> {comment.voteScore}
-                  </span>
-                </div>
-              </div>
-            ))}
-        </div>
+      <div>
+        {!Object.keys(post).length && <h4 className="red-text">{'> This post doesn`t exist <'}</h4>}
+        {Object.keys(post).length && (
+          <Post
+            post={post}
+            comments={comments}
+            showDetails={true}
+            onClickDelete={this.onClickDelete}
+            onClickVote={this.onClickVote}
+            onClickVoteComment={this.onClickVoteComment}
+            onClickDeleteComment={this.onClickDeleteComment}
+          />
+        )}
       </div>
     );
   }

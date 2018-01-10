@@ -19,4 +19,11 @@ To get started developing right away:
 
 ## API Server
 
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+Information about the API server and how to use it can be found in its [README file](https://github.com/CristianWorkGit/nanodegree_react_p2/blob/master/api-server/README.md).
+
+# FrontEnd
+
+To install and start the Frontend remember to install and start api-server first(check code above) and then start the frontend, to do this run the following commands inside the directory `/frontend`:
+
+* `yarn install`
+* `yarn start`
